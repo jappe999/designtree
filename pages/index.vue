@@ -92,12 +92,22 @@ export default {
         child.children && _this.collapse(child.children)
       })
     },
+
+    stripNode (node) {
+      const strippedNode = {}
+
+      Object.keys(nodeTemplate).forEach(key => {
+        strippedNode[key] = node[key]
+      })
+
+      return strippedNode
+    },
     
     selectNode (e, data) {
       if (data.id) {
+        const node = this.stripNode(data)
         this.selected = {
-          ...data,
-          id: '',
+          ...node,
           action: 'update',
         }
       } else {

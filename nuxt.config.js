@@ -93,13 +93,6 @@ module.exports = {
             ]
           })
         )
-
-        config.plugins.push(
-          new OptimizeCssAssetsPlugin({
-            assetNameRegExp: /\.css$/,
-            cssProcessorOptions: { discardComments: { removeAll: true } }
-          })
-        )
       }
     }
   },

@@ -15,9 +15,11 @@ const pushNode = (name, value) => {
   }
 }
 
-const formatData = (data, parentId = uuid()) => {
+const formatData = (data, parentId = null) => {
+  parentId = parentId ? `${parentId}/` : ''
+
   for (const child of data) {
-    const id = `${parentId}/${uuid()}`
+    const id = `${parentId}${uuid()}`
     const children = [ ...child.children ]
     delete child['children']
     node = {
@@ -27,7 +29,7 @@ const formatData = (data, parentId = uuid()) => {
       }
     }
    
-    pushNode(id, node)
+    pushNode(`/${id}`, node)
     formatData(children, id)
   }
 }
@@ -39,40 +41,35 @@ const data = [{
   "quantity": 1,
   "type": "Assembly",
   "deadline": "20-12-2018",
-  "children":
-  [
+  "children": [
     {
       "title": "Hull Assembly",
       "autor": "fill in author",
       "quantity": "fill in quantity",
       "type": "Assembly",
       "deadline": "fill in deadline",
-      "children":
-      [
+      "children": [
         {
           "title": "Port Hull",
           "autor": "fill in author",
           "quantity": "fill in quantity",
           "type": "Assembly",
           "deadline": "fill in deadline",
-          "children":
-          [
+          "children": [
             {
               "title": "Hull-Strut Connection Port",
               "autor": "fill in author",
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
                 {
                   "title": "Hull-Strut Connection Port Watertight Ring",
                   "autor": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -82,8 +79,7 @@ const data = [{
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -93,8 +89,7 @@ const data = [{
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 }
@@ -106,8 +101,7 @@ const data = [{
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             },
@@ -117,8 +111,7 @@ const data = [{
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             }
@@ -130,24 +123,21 @@ const data = [{
           "quantity": "fill in quantity",
           "type": "Assembly",
           "deadline": "fill in deadline",
-          "children":
-          [
+          "children": [
             {
               "title": "Hull-Strut Connection Starboard",
               "autor": "fill in author",
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
                 {
                   "title": "Hull-Strut Connection Starboard Watertight Ring",
                   "autor": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -157,8 +147,7 @@ const data = [{
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -168,8 +157,7 @@ const data = [{
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 }
@@ -181,8 +169,7 @@ const data = [{
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             },
@@ -192,8 +179,7 @@ const data = [{
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             }
@@ -205,24 +191,21 @@ const data = [{
           "quantity": "fill in quantity",
           "type": "Assembly",
           "deadline": "fill in deadline",
-          "children":
-          [
+          "children": [
             {
               "title": "Main Hull",
               "autor": "fill in author",
               "quantity": "fill in quantity",
               "type": "Assembly",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
                 {
                   "title": "Main Hull Laminate",
                   "autor": "fill in author",
                   "quantity": "fill in quantity",
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -232,8 +215,7 @@ const data = [{
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -243,8 +225,7 @@ const data = [{
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -254,16 +235,14 @@ const data = [{
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
                     {
                       "title": "Hull-Strut Connection Main Watertight Ring",
                       "autor": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -273,8 +252,7 @@ const data = [{
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     }
@@ -286,8 +264,7 @@ const data = [{
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 }
@@ -299,16 +276,14 @@ const data = [{
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
                 {
                   "title": "Circuit Breaker",
                   "autor": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -318,16 +293,14 @@ const data = [{
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
                     {
                       "title": "Motor Precharge Relay",
                       "autor": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -337,8 +310,7 @@ const data = [{
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     }
@@ -350,16 +322,14 @@ const data = [{
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
                     {
                       "title": "Solar Precharge Relay",
                       "autor": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -369,8 +339,7 @@ const data = [{
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     }
@@ -382,8 +351,7 @@ const data = [{
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -393,8 +361,7 @@ const data = [{
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -404,8 +371,7 @@ const data = [{
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -415,8 +381,7 @@ const data = [{
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -426,16 +391,14 @@ const data = [{
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
                     {
                       "title": "TDK Lambda",
                       "autor": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -445,8 +408,7 @@ const data = [{
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     }
@@ -458,8 +420,7 @@ const data = [{
                   "quantity": 12,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 }
@@ -471,32 +432,28 @@ const data = [{
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
                 {
                   "title": "Pack",
                   "autor": "fill in author",
                   "quantity": "fill in quantity",
                   "type": "Assembly",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
                     {
                       "title": "Module",
                       "autor": "fill in author",
                       "quantity": "fill in quantity",
                       "type": "Assembly",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
                         {
                           "title": "Cell",
                           "autor": "fill in author",
                           "quantity": "fill in quantity",
                           "type": "Part",
                           "deadline": "fill in deadline",
-                          "children":
-                          [
+                          "children": [
 
                           ]
                         },
@@ -506,8 +463,7 @@ const data = [{
                           "quantity": "fill in quantity",
                           "type": "Part",
                           "deadline": "fill in deadline",
-                          "children":
-                          [
+                          "children": [
 
                           ]
                         },
@@ -517,8 +473,7 @@ const data = [{
                           "quantity": "fill in quantity",
                           "type": "Part",
                           "deadline": "fill in deadline",
-                          "children":
-                          [
+                          "children": [
 
                           ]
                         }
@@ -532,8 +487,7 @@ const data = [{
                   "quantity": "fill in quantity",
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -543,16 +497,14 @@ const data = [{
                   "quantity": "fill in quantity",
                   "type": "Assembly",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
                     {
                       "title": "Custom PCB",
                       "autor": "fill in author",
                       "quantity": "fill in quantity",
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     }
@@ -566,8 +518,7 @@ const data = [{
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             },
@@ -577,24 +528,21 @@ const data = [{
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
                 {
                   "title": "Control",
                   "autor": "fill in author",
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
                     {
                       "title": "Bilge Pump Switch",
                       "autor": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -604,8 +552,7 @@ const data = [{
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -615,8 +562,7 @@ const data = [{
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -626,8 +572,7 @@ const data = [{
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -637,8 +582,7 @@ const data = [{
                       "quantity": "fill in quantity",
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     }
@@ -650,16 +594,14 @@ const data = [{
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
                     {
                       "title": "Antenna",
                       "autor": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -669,8 +611,7 @@ const data = [{
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -680,8 +621,7 @@ const data = [{
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     }
@@ -695,16 +635,14 @@ const data = [{
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
                 {
                   "title": "Strategy Screen",
                   "autor": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 }
@@ -716,16 +654,14 @@ const data = [{
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
                 {
                   "title": "Maintenance Screen",
                   "autor": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 }
@@ -737,8 +673,7 @@ const data = [{
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             },
@@ -748,8 +683,7 @@ const data = [{
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             },
@@ -759,24 +693,21 @@ const data = [{
               "quantity": 1,
               "type": "Assembly",
               "deadline": "",
-              "children":
-              [
+              "children": [
                 {
                   "title": "Motor",
                   "autor": "Gijs van Rijen",
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
-                  "children":
-                  [
+                  "children": [
 	                  {
                       "title": "Front bearing (FAG 6204)",
                       "autor": "Gijs van Rijen",
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -786,8 +717,7 @@ const data = [{
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
-                      "children":
-                      [
+                      "children": [
 
    	                  ]
               	    },
@@ -797,8 +727,7 @@ const data = [{
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
-                      "children":
-              	      [
+                      "children": [
 
                	      ]
                 	  },
@@ -808,8 +737,7 @@ const data = [{
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
-                      "children":
-              	      [
+                      "children": [
 
                 	    ]
                 	  }
@@ -821,16 +749,14 @@ const data = [{
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
-                  "children":
-                  [
+                  "children": [
               	    {
               	      "title": "Flanged shaft with inner splines",
                       "autor": "Gijs van Rijen",
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -840,8 +766,7 @@ const data = [{
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     }
@@ -853,8 +778,7 @@ const data = [{
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -864,16 +788,14 @@ const data = [{
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
-                  "children":
-                  [
+                  "children": [
               	    {
               	      "title": "X-Bracket",
                       "autor": "Gijs van Rijen",
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -883,8 +805,7 @@ const data = [{
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     }
@@ -896,8 +817,7 @@ const data = [{
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -907,8 +827,7 @@ const data = [{
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 }
@@ -920,16 +839,14 @@ const data = [{
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
                 {
                   "title": "Steering Shaft",
                   "autor": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -939,16 +856,14 @@ const data = [{
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
                     {
                       "title": "Front Steering Arm Top Plate",
                       "autor": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -958,8 +873,7 @@ const data = [{
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -969,8 +883,7 @@ const data = [{
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -980,8 +893,7 @@ const data = [{
                       "quantity": 2,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     }
@@ -993,8 +905,7 @@ const data = [{
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -1004,8 +915,7 @@ const data = [{
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
 
                   ]
                 },
@@ -1015,16 +925,14 @@ const data = [{
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
                     {
                       "title": "Rear Steering Arm Top Plate",
                       "autor": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -1034,8 +942,7 @@ const data = [{
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -1045,8 +952,7 @@ const data = [{
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     },
@@ -1056,8 +962,7 @@ const data = [{
                       "quantity": 2,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     }
@@ -1069,16 +974,14 @@ const data = [{
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
-                  "children":
-                  [
+                  "children": [
                     {
                       "title": "Steering Screen",
                       "autor": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
-                      "children":
-                      [
+                      "children": [
 
                       ]
                     }
@@ -1094,16 +997,14 @@ const data = [{
           "quantity": "fill in quantity",
           "type": "Assembly",
           "deadline": "fill in deadline",
-          "children":
-          [
+          "children": [
             {
               "title": "Modularity Beam",
               "autor": "fill in author",
               "quantity": "fill in quantity",
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             }
@@ -1115,16 +1016,14 @@ const data = [{
           "quantity": 1,
           "type": "Assembly",
           "deadline": "fill in deadline",
-          "children":
-          [
+          "children": [
             {
               "title": "Solar Panel",
               "autor": "fill in author",
               "quantity": "fill in quantity",
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             }
@@ -1138,16 +1037,14 @@ const data = [{
       "quantity": 2,
       "type": "Assembly",
       "deadline": "/",
-      "children":
-      [
+      "children": [
         {
           "title": "Front Wing",
           "autor": "Max and Kjell",
           "quantity": 1,
           "type": "Part",
           "deadline": "/",
-          "children":
-          [
+          "children": [
 
           ]
         },
@@ -1157,16 +1054,14 @@ const data = [{
           "quantity": 1,
           "type": "Assembly",
           "deadline": "fill in deadline",
-          "children":
-          [
+          "children": [
             {
               "title": "Front PU Ridderflex rubber (water resistance)",
               "autor": "fill in author",
               "quantity": 2,
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             },
@@ -1176,8 +1071,7 @@ const data = [{
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             },
@@ -1187,8 +1081,7 @@ const data = [{
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             }
@@ -1200,8 +1093,7 @@ const data = [{
           "quantity": 1,
           "type": "Assembly",
           "deadline": "fill in deadline",
-          "children":
-          [
+          "children": [
 
           ]
         },
@@ -1211,8 +1103,7 @@ const data = [{
           "quantity": 1,
           "type": "Part",
           "deadline": "fill in deadline",
-          "children":
-          [
+          "children": [
 
           ]
         }
@@ -1224,16 +1115,14 @@ const data = [{
       "quantity": 1,
       "type": "Assembly",
       "deadline": "fill in deadline",
-      "children":
-      [
+      "children": [
         {
           "title": "Rear Wing",
           "autor": "Max and Kjell",
           "quantity": 1,
           "type": "Part",
           "deadline": "fill in deadline",
-          "children":
-          [
+          "children": [
 
           ]
         },
@@ -1243,16 +1132,14 @@ const data = [{
           "quantity": 1,
           "type": "Assembly",
           "deadline": "fill in deadline",
-          "children":
-          [
+          "children": [
             {
               "title": "Rear PU Ridderflex rubber (water resistance)",
               "autor": "Max and Kjell",
               "quantity": 2,
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             },
@@ -1262,8 +1149,7 @@ const data = [{
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             },
@@ -1273,8 +1159,7 @@ const data = [{
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             },
@@ -1284,16 +1169,14 @@ const data = [{
               "quantity": "1",
               "type": "Assembly",
               "deadline": "",
-              "children":
-              [
+              "children": [
           	    {
                   "title": "Motor shaft",
                   "autor": "Gijs van Rijen",
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
-                  "children":
-          	      [
+                  "children": [
 
           	      ]
           	    },
@@ -1303,8 +1186,7 @@ const data = [{
                   "quantity": "2",
                   "type": "Part",
                   "deadline": "",
-                  "children":
-          	      [
+                  "children": [
 
           	      ]
           	    },
@@ -1314,8 +1196,7 @@ const data = [{
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
-                  "children":
-          	      [
+                  "children": [
 
           	      ]
           	    },
@@ -1325,8 +1206,7 @@ const data = [{
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
-                  "children":
-          	      [
+                  "children": [
 
       	          ]
           	    }
@@ -1338,8 +1218,7 @@ const data = [{
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             },
@@ -1349,8 +1228,7 @@ const data = [{
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
-              "children":
-              [
+              "children": [
 
               ]
             }
@@ -1362,8 +1240,7 @@ const data = [{
           "quantity": 1,
           "type": "Part",
           "deadline": "fill in deadline",
-          "children":
-          [
+          "children": [
 
           ]
         },
@@ -1373,8 +1250,7 @@ const data = [{
           "quantity": 1,
           "type": "Part",
           "deadline": "fill in deadline",
-          "children":
-          [
+          "children": [
 
           ]
         },
@@ -1384,16 +1260,14 @@ const data = [{
           "quantity": 1,
           "type": "Assembly",
           "deadline": "",
-          "children":
-          [
+          "children": [
             {
               "title": "Propeller",
               "autor": "Gijs van Rijen",
               "quantity": 1,
               "type": "Part",
               "deadline": "",
-              "children":
-              [
+              "children": [
 
               ]
             },
@@ -1403,8 +1277,7 @@ const data = [{
               "quantity": 1,
               "type": "Part",
               "deadline": "",
-              "children":
-              [
+              "children": [
 
               ]
             }
