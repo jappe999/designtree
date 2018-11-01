@@ -15,6 +15,12 @@ const pushNode = (name, value) => {
   }
 }
 
+const isDate = date => /[0-9]{2}\-[0-9]{2}\-[0-9]{2}/.test(date)
+
+const formatDate = date => isDate(date)
+  ? date.split('-').reverse().join('-')
+  : ''
+
 const formatData = (data, parentId = null) => {
   parentId = parentId ? `${parentId}/` : ''
 
@@ -22,6 +28,7 @@ const formatData = (data, parentId = null) => {
     const id = `${parentId}${uuid()}`
     const children = [ ...child.children ]
     delete child['children']
+    child.deadline = formatDate(child.deadline)
     node = {
       data: {
         id,
@@ -37,35 +44,35 @@ const formatData = (data, parentId = null) => {
 
 const data = [{
   "title": "Solar Boat",
-  "autor": "Sven Uitendaal",
+  "author": "Sven Uitendaal",
   "quantity": 1,
   "type": "Assembly",
   "deadline": "20-12-2018",
   "children": [
     {
       "title": "Hull Assembly",
-      "autor": "fill in author",
+      "author": "fill in author",
       "quantity": "fill in quantity",
       "type": "Assembly",
       "deadline": "fill in deadline",
       "children": [
         {
           "title": "Port Hull",
-          "autor": "fill in author",
+          "author": "fill in author",
           "quantity": "fill in quantity",
           "type": "Assembly",
           "deadline": "fill in deadline",
           "children": [
             {
               "title": "Hull-Strut Connection Port",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
               "children": [
                 {
                   "title": "Hull-Strut Connection Port Watertight Ring",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -75,7 +82,7 @@ const data = [{
                 },
                 {
                   "title": "Hull-Strut Connection Port Stiffeners",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -85,7 +92,7 @@ const data = [{
                 },
                 {
                   "title": "Front Strut Port Outer Tube",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -97,7 +104,7 @@ const data = [{
             },
             {
               "title": "Front Strut Port Plate",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
@@ -107,7 +114,7 @@ const data = [{
             },
             {
               "title": "Hatch Port",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
@@ -119,21 +126,21 @@ const data = [{
         },
         {
           "title": "Starboard Hull",
-          "autor": "fill in author",
+          "author": "fill in author",
           "quantity": "fill in quantity",
           "type": "Assembly",
           "deadline": "fill in deadline",
           "children": [
             {
               "title": "Hull-Strut Connection Starboard",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
               "children": [
                 {
                   "title": "Hull-Strut Connection Starboard Watertight Ring",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -143,7 +150,7 @@ const data = [{
                 },
                 {
                   "title": "Hull-Strut Connection Starboard Stiffeners",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -153,7 +160,7 @@ const data = [{
                 },
                 {
                   "title": "Front Strut Starboard Outer Tube",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -165,7 +172,7 @@ const data = [{
             },
             {
               "title": "Front Strut Starboard Plate",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
@@ -175,7 +182,7 @@ const data = [{
             },
             {
               "title": "Hatch Starboard",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
@@ -187,21 +194,21 @@ const data = [{
         },
         {
           "title": "Main Hull Assembly",
-          "autor": "fill in author",
+          "author": "fill in author",
           "quantity": "fill in quantity",
           "type": "Assembly",
           "deadline": "fill in deadline",
           "children": [
             {
               "title": "Main Hull",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": "fill in quantity",
               "type": "Assembly",
               "deadline": "fill in deadline",
               "children": [
                 {
                   "title": "Main Hull Laminate",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": "fill in quantity",
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -211,7 +218,7 @@ const data = [{
                 },
                 {
                   "title": "Rear Strut Outer Tube",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -221,7 +228,7 @@ const data = [{
                 },
                 {
                   "title": "Rear Strut Plate",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -231,14 +238,14 @@ const data = [{
                 },
                 {
                   "title": "Hull-Strut Connection Main",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
                   "children": [
                     {
                       "title": "Hull-Strut Connection Main Watertight Ring",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -248,7 +255,7 @@ const data = [{
                     },
                     {
                       "title": "Hull-Strut Connection Main Stiffeners",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -260,7 +267,7 @@ const data = [{
                 },
                 {
                   "title": "Hatch Main",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -272,14 +279,14 @@ const data = [{
             },
             {
               "title": "Power Box",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
               "children": [
                 {
                   "title": "Circuit Breaker",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -289,14 +296,14 @@ const data = [{
                 },
                 {
                   "title": "Motor Precharger",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
                   "children": [
                     {
                       "title": "Motor Precharge Relay",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -306,7 +313,7 @@ const data = [{
                     },
                     {
                       "title": "Motor Precharge Resistor",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -318,14 +325,14 @@ const data = [{
                 },
                 {
                   "title": "Solar Precharger",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
                   "children": [
                     {
                       "title": "Solar Precharge Relay",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -335,7 +342,7 @@ const data = [{
                     },
                     {
                       "title": "Solar Precharge Resistor",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -347,7 +354,7 @@ const data = [{
                 },
                 {
                   "title": "Motor Relay",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -357,7 +364,7 @@ const data = [{
                 },
                 {
                   "title": "Solar Relay",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -367,7 +374,7 @@ const data = [{
                 },
                 {
                   "title": "Fuse",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -377,7 +384,7 @@ const data = [{
                 },
                 {
                   "title": "EMS",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -387,14 +394,14 @@ const data = [{
                 },
                 {
                   "title": "24 Volt",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
                   "children": [
                     {
                       "title": "TDK Lambda",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -404,7 +411,7 @@ const data = [{
                     },
                     {
                       "title": "Custom PCB",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -416,7 +423,7 @@ const data = [{
                 },
                 {
                   "title": "MPPT",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 12,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -428,28 +435,28 @@ const data = [{
             },
             {
               "title": "Battery Box",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
               "children": [
                 {
                   "title": "Pack",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": "fill in quantity",
                   "type": "Assembly",
                   "deadline": "fill in deadline",
                   "children": [
                     {
                       "title": "Module",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": "fill in quantity",
                       "type": "Assembly",
                       "deadline": "fill in deadline",
                       "children": [
                         {
                           "title": "Cell",
-                          "autor": "fill in author",
+                          "author": "fill in author",
                           "quantity": "fill in quantity",
                           "type": "Part",
                           "deadline": "fill in deadline",
@@ -459,7 +466,7 @@ const data = [{
                         },
                         {
                           "title": "Nickel Foil",
-                          "autor": "fill in author",
+                          "author": "fill in author",
                           "quantity": "fill in quantity",
                           "type": "Part",
                           "deadline": "fill in deadline",
@@ -469,7 +476,7 @@ const data = [{
                         },
                         {
                           "title": "PMMA",
-                          "autor": "fill in author",
+                          "author": "fill in author",
                           "quantity": "fill in quantity",
                           "type": "Part",
                           "deadline": "fill in deadline",
@@ -483,7 +490,7 @@ const data = [{
                 },
                 {
                   "title": "Casing",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": "fill in quantity",
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -493,14 +500,14 @@ const data = [{
                 },
                 {
                   "title": "BMS",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": "fill in quantity",
                   "type": "Assembly",
                   "deadline": "fill in deadline",
                   "children": [
                     {
                       "title": "Custom PCB",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": "fill in quantity",
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -514,7 +521,7 @@ const data = [{
             },
             {
               "title": "Control Box",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
@@ -524,21 +531,21 @@ const data = [{
             },
             {
               "title": "Dashboard",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
               "children": [
                 {
                   "title": "Control",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
                   "children": [
                     {
                       "title": "Bilge Pump Switch",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -548,7 +555,7 @@ const data = [{
                     },
                     {
                       "title": "Deadmans Switch",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -558,7 +565,7 @@ const data = [{
                     },
                     {
                       "title": "24 V Switch",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -568,7 +575,7 @@ const data = [{
                     },
                     {
                       "title": "Solar Panel Switch",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -578,7 +585,7 @@ const data = [{
                     },
                     {
                       "title": "Control PCB",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": "fill in quantity",
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -590,14 +597,14 @@ const data = [{
                 },
                 {
                   "title": "DAQ",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
                   "children": [
                     {
                       "title": "Antenna",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -607,7 +614,7 @@ const data = [{
                     },
                     {
                       "title": "Modem",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -617,7 +624,7 @@ const data = [{
                     },
                     {
                       "title": "Development Board",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -631,14 +638,14 @@ const data = [{
             },
             {
               "title": "Strategy Interface",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
               "children": [
                 {
                   "title": "Strategy Screen",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -650,14 +657,14 @@ const data = [{
             },
             {
               "title": "Maintenance Interface",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
               "children": [
                 {
                   "title": "Maintenance Screen",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -669,7 +676,7 @@ const data = [{
             },
             {
               "title": "Motor Controller",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
@@ -679,7 +686,7 @@ const data = [{
             },
             {
               "title": "Logger",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
@@ -689,21 +696,21 @@ const data = [{
             },
             {
               "title": "Motor Assembly",
-              "autor": "Gijs van Rijen",
+              "author": "Gijs van Rijen",
               "quantity": 1,
               "type": "Assembly",
               "deadline": "",
               "children": [
                 {
                   "title": "Motor",
-                  "autor": "Gijs van Rijen",
+                  "author": "Gijs van Rijen",
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
                   "children": [
 	                  {
                       "title": "Front bearing (FAG 6204)",
-                      "autor": "Gijs van Rijen",
+                      "author": "Gijs van Rijen",
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
@@ -713,7 +720,7 @@ const data = [{
                     },
                     {
                       "title": "Rear bearing (FAG 3204)",
-                      "autor": "Gijs van Rijen",
+                      "author": "Gijs van Rijen",
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
@@ -723,7 +730,7 @@ const data = [{
               	    },
               	    {
               	      "title": "Stator",
-                      "autor": "Gijs van Rijen",
+                      "author": "Gijs van Rijen",
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
@@ -733,7 +740,7 @@ const data = [{
                 	  },
               	    {
               	      "title": "Rotor",
-                      "autor": "Gijs van Rijen",
+                      "author": "Gijs van Rijen",
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
@@ -745,14 +752,14 @@ const data = [{
               	},
               	{
               	  "title": "Shaft mounting",
-                  "autor": "Gijs van Rijen",
+                  "author": "Gijs van Rijen",
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
                   "children": [
               	    {
               	      "title": "Flanged shaft with inner splines",
-                      "autor": "Gijs van Rijen",
+                      "author": "Gijs van Rijen",
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
@@ -762,7 +769,7 @@ const data = [{
                     },
                     {
   	                  "title": "6x M6 threaded boreholes",
-                      "autor": "Gijs van Rijen",
+                      "author": "Gijs van Rijen",
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
@@ -774,7 +781,7 @@ const data = [{
                 },
               	{
               	  "title": "Resolver (Tamagawa TS2620N21E11)",
-                  "autor": "Gijs van Rijen",
+                  "author": "Gijs van Rijen",
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
@@ -784,14 +791,14 @@ const data = [{
                 },
               	{
               	  "title": "Motor mounting",
-                  "autor": "Gijs van Rijen",
+                  "author": "Gijs van Rijen",
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
                   "children": [
               	    {
               	      "title": "X-Bracket",
-                      "autor": "Gijs van Rijen",
+                      "author": "Gijs van Rijen",
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
@@ -801,7 +808,7 @@ const data = [{
                     },
                     {
         	            "title": "6x M6 threaded boreholes",
-                      "autor": "Gijs van Rijen",
+                      "author": "Gijs van Rijen",
                       "quantity": "1",
                       "type": "Part",
                       "deadline": "",
@@ -813,7 +820,7 @@ const data = [{
                 },
               	{
               	  "title": "UVW connector (3 phases)",
-                  "autor": "Gijs van Rijen",
+                  "author": "Gijs van Rijen",
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
@@ -823,7 +830,7 @@ const data = [{
                 },
               	{
               	  "title": "90 deg coolant fittings",
-                  "autor": "Gijs van Rijen",
+                  "author": "Gijs van Rijen",
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
@@ -835,14 +842,14 @@ const data = [{
             },
             {
               "title": "Steering Assembly",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
               "children": [
                 {
                   "title": "Steering Shaft",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -852,14 +859,14 @@ const data = [{
                 },
                 {
                   "title": "Front Steering Arm",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
                   "children": [
                     {
                       "title": "Front Steering Arm Top Plate",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -869,7 +876,7 @@ const data = [{
                     },
                     {
                       "title": "Front Steering Arm Middle Plate",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -879,7 +886,7 @@ const data = [{
                     },
                     {
                       "title": "Front Steering Arm Bottom Plate",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -889,7 +896,7 @@ const data = [{
                     },
                     {
                       "title": "Front Steering Arm Cable Connector",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 2,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -901,7 +908,7 @@ const data = [{
                 },
                 {
                   "title": "Steering Inner Cable",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -911,7 +918,7 @@ const data = [{
                 },
                 {
                   "title": "Steering Outer Cable",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Part",
                   "deadline": "fill in deadline",
@@ -921,14 +928,14 @@ const data = [{
                 },
                 {
                   "title": "Rear Steering Arm",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
                   "children": [
                     {
                       "title": "Rear Steering Arm Top Plate",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -938,7 +945,7 @@ const data = [{
                     },
                     {
                       "title": "Rear Steering Arm Middle Plate",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -948,7 +955,7 @@ const data = [{
                     },
                     {
                       "title": "Rear Steering Arm Bottom Plate",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -958,7 +965,7 @@ const data = [{
                     },
                     {
                       "title": "Rear Steering Arm Cable Connector",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 2,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -970,14 +977,14 @@ const data = [{
                 },
                 {
                   "title": "Steer Interface",
-                  "autor": "fill in author",
+                  "author": "fill in author",
                   "quantity": 1,
                   "type": "Assembly",
                   "deadline": "fill in deadline",
                   "children": [
                     {
                       "title": "Steering Screen",
-                      "autor": "fill in author",
+                      "author": "fill in author",
                       "quantity": 1,
                       "type": "Part",
                       "deadline": "fill in deadline",
@@ -993,14 +1000,14 @@ const data = [{
         },
         {
           "title": "Hull Modularity",
-          "autor": "fill in author",
+          "author": "fill in author",
           "quantity": "fill in quantity",
           "type": "Assembly",
           "deadline": "fill in deadline",
           "children": [
             {
               "title": "Modularity Beam",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": "fill in quantity",
               "type": "Part",
               "deadline": "fill in deadline",
@@ -1012,14 +1019,14 @@ const data = [{
         },
         {
           "title": "Solar Deck",
-          "autor": "fill in author",
+          "author": "fill in author",
           "quantity": 1,
           "type": "Assembly",
           "deadline": "fill in deadline",
           "children": [
             {
               "title": "Solar Panel",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": "fill in quantity",
               "type": "Part",
               "deadline": "fill in deadline",
@@ -1033,14 +1040,14 @@ const data = [{
     },
     {
       "title": "Front Strut Assembly",
-      "autor": "Kjell and Max",
+      "author": "Kjell and Max",
       "quantity": 2,
       "type": "Assembly",
       "deadline": "/",
       "children": [
         {
           "title": "Front Wing",
-          "autor": "Max and Kjell",
+          "author": "Max and Kjell",
           "quantity": 1,
           "type": "Part",
           "deadline": "/",
@@ -1050,14 +1057,14 @@ const data = [{
         },
         {
           "title": "Front Strut",
-          "autor": "Max and Kjell",
+          "author": "Max and Kjell",
           "quantity": 1,
           "type": "Assembly",
           "deadline": "fill in deadline",
           "children": [
             {
               "title": "Front PU Ridderflex rubber (water resistance)",
-              "autor": "fill in author",
+              "author": "fill in author",
               "quantity": 2,
               "type": "Part",
               "deadline": "fill in deadline",
@@ -1067,7 +1074,7 @@ const data = [{
             },
             {
               "title": "Front Strut left half",
-              "autor": "Max and Kjell",
+              "author": "Max and Kjell",
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
@@ -1077,7 +1084,7 @@ const data = [{
             },
             {
               "title": "Front Strut right half",
-              "autor": "Max and Kjell",
+              "author": "Max and Kjell",
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
@@ -1089,7 +1096,7 @@ const data = [{
         },
         {
           "title": "Front strut Inner Tube",
-          "autor": "Max and Kjell",
+          "author": "Max and Kjell",
           "quantity": 1,
           "type": "Assembly",
           "deadline": "fill in deadline",
@@ -1099,7 +1106,7 @@ const data = [{
         },
         {
           "title": "Front angle of attack actuator",
-          "autor": "Max and Kjell",
+          "author": "Max and Kjell",
           "quantity": 1,
           "type": "Part",
           "deadline": "fill in deadline",
@@ -1111,14 +1118,14 @@ const data = [{
     },
     {
       "title": "Rear Strut Assembly",
-      "autor": "fill in author",
+      "author": "fill in author",
       "quantity": 1,
       "type": "Assembly",
       "deadline": "fill in deadline",
       "children": [
         {
           "title": "Rear Wing",
-          "autor": "Max and Kjell",
+          "author": "Max and Kjell",
           "quantity": 1,
           "type": "Part",
           "deadline": "fill in deadline",
@@ -1128,14 +1135,14 @@ const data = [{
         },
         {
           "title": "Rear Strut",
-          "autor": "Max and Kjell",
+          "author": "Max and Kjell",
           "quantity": 1,
           "type": "Assembly",
           "deadline": "fill in deadline",
           "children": [
             {
               "title": "Rear PU Ridderflex rubber (water resistance)",
-              "autor": "Max and Kjell",
+              "author": "Max and Kjell",
               "quantity": 2,
               "type": "Part",
               "deadline": "fill in deadline",
@@ -1145,7 +1152,7 @@ const data = [{
             },
             {
               "title": "Rear strut left half",
-              "autor": "Max and Kjell",
+              "author": "Max and Kjell",
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
@@ -1155,7 +1162,7 @@ const data = [{
             },
             {
               "title": "Rear strut right half",
-              "autor": "Max and Kjell",
+              "author": "Max and Kjell",
               "quantity": 1,
               "type": "Part",
               "deadline": "fill in deadline",
@@ -1165,14 +1172,14 @@ const data = [{
             },
             {
               "title": "Drive-train assembly",
-              "autor": "Gijs van Rijen",
+              "author": "Gijs van Rijen",
               "quantity": "1",
               "type": "Assembly",
               "deadline": "",
               "children": [
           	    {
                   "title": "Motor shaft",
-                  "autor": "Gijs van Rijen",
+                  "author": "Gijs van Rijen",
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
@@ -1182,7 +1189,7 @@ const data = [{
           	    },
           	    {
                   "title": "Bearings",
-                  "autor": "Gijs van Rijen",
+                  "author": "Gijs van Rijen",
                   "quantity": "2",
                   "type": "Part",
                   "deadline": "",
@@ -1192,7 +1199,7 @@ const data = [{
           	    },
                 {
                   "title": "Bevel gear",
-                  "autor": "Gijs van Rijen",
+                  "author": "Gijs van Rijen",
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
@@ -1202,7 +1209,7 @@ const data = [{
           	    },
           	    {
                   "title": "Torque limiter",
-                  "autor": "Gijs van Rijen",
+                  "author": "Gijs van Rijen",
                   "quantity": "1",
                   "type": "Part",
                   "deadline": "",
@@ -1214,7 +1221,7 @@ const data = [{
             },
             {
               "title": "Watercooling assembly",
-              "autor": "Max and Kjell",
+              "author": "Max and Kjell",
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
@@ -1224,7 +1231,7 @@ const data = [{
             },
             {
               "title": "Pod gear wheel",
-              "autor": "Max and Kjell",
+              "author": "Max and Kjell",
               "quantity": 1,
               "type": "Assembly",
               "deadline": "fill in deadline",
@@ -1236,7 +1243,7 @@ const data = [{
         },
         {
           "title": "Rear strut Angle of Attack actuator",
-          "autor": "Max and Kjell",
+          "author": "Max and Kjell",
           "quantity": 1,
           "type": "Part",
           "deadline": "fill in deadline",
@@ -1246,7 +1253,7 @@ const data = [{
         },
         {
           "title": "Rear Inner Tube",
-          "autor": "Max and Kjell",
+          "author": "Max and Kjell",
           "quantity": 1,
           "type": "Part",
           "deadline": "fill in deadline",
@@ -1256,14 +1263,14 @@ const data = [{
         },
         {
           "title": "Propeller Assembly",
-          "autor": "Gijs van Rijen",
+          "author": "Gijs van Rijen",
           "quantity": 1,
           "type": "Assembly",
           "deadline": "",
           "children": [
             {
               "title": "Propeller",
-              "autor": "Gijs van Rijen",
+              "author": "Gijs van Rijen",
               "quantity": 1,
               "type": "Part",
               "deadline": "",
@@ -1273,7 +1280,7 @@ const data = [{
             },
             {
               "title": "Propeller shear pin",
-              "autor": "Gijs van Rijen",
+              "author": "Gijs van Rijen",
               "quantity": 1,
               "type": "Part",
               "deadline": "",

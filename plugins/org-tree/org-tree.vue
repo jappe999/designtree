@@ -22,12 +22,14 @@ import render from './node'
 
 export default {
   name: 'tree',
+  
   components: {
     OrgTreeNode: {
       render,
       functional: true
     }
   },
+  
   props: {
     data: {
       type: Object,

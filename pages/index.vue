@@ -64,8 +64,13 @@ export default {
 
   methods: {
     async fetchData () {
-      const { data: tree } = await axios.get('/api/tree')
-      this.tree = tree
+      const { data } = await axios.get('/api/tree')
+      this.tree = {
+        ...this.tree,
+        ...data,
+      }
+      console.log(this.tree);
+      
     },
 
     renderContent (h, data) {
@@ -131,15 +136,27 @@ export default {
     escapeNode () {
       this.selected = nodeTemplate
     },
+    
+    updateNode (obj = {}, path, value) {
+      if (path.length === 1) {
+        obj.children[path] = {
+          ...obj.children[path],
+          ...value
+        }
+        return
+      }
+      return this.updateNode(obj.children[path[0]], path.slice(1), value)
+    },
 
     pushNode (node) {
       if (!node.id) {
         node.id = uuid()
       }
 
-      axios.post(`/api/tree`, node)
+      axios.post('/api/tree', node)
       .then(() => {
-        this.escapeNode()
+        this.updateNode(this.tree, node.id.split('/').slice(1), node)
+        // this.escapeNode()
       })
       .catch(error => console.error(error))
     },

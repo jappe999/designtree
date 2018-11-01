@@ -20,7 +20,7 @@ function click(e, data, context) {
 }
 
 const isLeaf = (data, prop) => {
-  return !(Array.isArray(data[prop]) && data[prop].length > 0)
+  return !(Object.keys(data[prop] || {}).length > 0)
 }
 
 export const renderNode = (h, data, context) => {
@@ -125,10 +125,10 @@ export const renderLabel = (h, data, context) => {
   }, childNodes)])
 }
 
-export const renderChildren = (h, list, context) => {
-  if (Array.isArray(list) && list.length) {
-    const children = list.map(item => {
-      return renderNode(h, item, context)
+export const renderChildren = (h, objectList, context) => {
+  if (Object.keys(objectList).length) {
+    const children = Object.keys(objectList).map(item => {
+      return renderNode(h, objectList[item], context)
     })
 
     return h('div', {

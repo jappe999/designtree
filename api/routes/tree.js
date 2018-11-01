@@ -6,19 +6,19 @@ const router = Router()
 const db = () => new JsonDB('tree', true, false)
 
 const formatNodes = data => {
-  const nodes = []
+  const nodes = {}
 
   Object.keys(data).forEach(key => {
     const node = data[key]
     const fields = { ...node.data }
     delete node['data']
     
-    nodes.push({
+    nodes[key] = {
       ...fields,
-      children: [
+      children: {
         ...formatNodes(node),
-      ]
-    })
+      }
+    }
   })
   
   return nodes
@@ -27,7 +27,8 @@ const formatNodes = data => {
 const fetchNode = nodeName => {
   try {
     const data = db().getData(nodeName)
-    return formatNodes(data)[0]
+    const nodes = formatNodes(data)
+    return nodes[Object.keys(nodes)[0]]
   } catch (e) {
     console.error(e)
     return {}
