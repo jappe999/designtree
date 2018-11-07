@@ -1,19 +1,21 @@
 <template>
-  <div class="text-black">
-    <h1 class="p-8">Design Tree</h1>
+  <div class="flex text-black">
+    <div class="max-h-screen w-full overflow-auto dragscroll">
+      <h1 class="p-8">Design Tree</h1>
 
-    <tree
-      :data="tree"
-      :collapsable="true"
-      :horizontal="true"
-      :render-content="renderContent"
-      @expand="onExpand"
-      @node-click="selectNode"
-      @node-double-click="createChild"
-      class="select-none"
-    />
+      <tree
+        :data="tree"
+        :collapsable="true"
+        :horizontal="true"
+        :render-content="renderContent"
+        @expand="onExpand"
+        @node-click="selectNode"
+        @node-double-click="createChild"
+        class="select-none"
+      />
+    </div>
 
-    <div class="h-screen min-w-64 w-full max-w-sm fixed pin-t pin-r flex flex-col justify-between shadow-md">
+    <div class="h-screen min-w-64 w-full max-w-sm flex flex-col justify-between shadow-md">
       <node
         :selected="selected"
         @escape="escapeNode"
@@ -36,6 +38,10 @@
 import axios from 'axios'
 import uuid from 'uuid/v4'
 import Node from '~/components/Node'
+
+if (process.browser) {
+  require('dragscroll')
+}
 
 const nodeTemplate = {
   id: '',
@@ -88,13 +94,13 @@ export default {
       }
     },
     
-    collapse (list) {
-      var _this = this
-      list.forEach(function(child) {
+    collapse (object) {      
+      Object.keys(object).forEach(key => {
+        const child = object[key]
         if (child.expand) {
           child.expand = false
         }
-        child.children && _this.collapse(child.children)
+        child.children && this.collapse(child.children)
       })
     },
 

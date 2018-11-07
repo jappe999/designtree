@@ -16,6 +16,7 @@
     "axios": "^0.18.0",
     "babel-plugin-add-module-exports": "^1.0.0",
     "body-parser": "^1.18.3",
+    "dragscroll": "^0.0.8",
     "glob-all": "^3.1.0",
     "node-json-db": "^0.9.1",
     "nuxt": "^2.0.0",
