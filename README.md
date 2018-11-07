@@ -1,6 +1,6 @@
 # design-tree
 
-> Desgin Tree
+> Design Tree
 
 ## Build Setup
 
