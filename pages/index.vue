@@ -1,28 +1,43 @@
 <template>
   <div class="flex text-black">
-    <div class="max-h-screen w-full overflow-auto dragscroll">
-      <h1 class="pt-8 px-8 pb-4">Design Tree</h1>
+    <div class="max-h-screen w-full flex flex-col" :class="scrollbars ? 'overflow-auto' : 'overflow-hidden'">
+      <div class="w-full p-8 border-b">
+        <h1>Design Tree</h1>
 
-      <div class="px-8 pb-8">
-        <label>
-          <input type="checkbox" v-model="collapsed">
+        <label class="mt-4 flex items-center">
+          <input
+            v-model="collapsed"
+            type="checkbox"
+            class="mr-1"
+          >
           Collapsed
+        </label>
+
+        <label class="mt-4 flex items-center">
+          <input
+            v-model="scrollbars"
+            type="checkbox"
+            class="mr-1"
+          >
+          Show scrollbars
         </label>
       </div>
 
-      <tree
-        :data="tree"
-        :collapsable="collapsed"
-        :horizontal="true"
-        :render-content="renderContent"
-        @expand="onExpand"
-        @node-click="selectNode"
-        @node-double-click="createChild"
-        class="select-none cursor-move"
-      />
+      <div class="dragscroll" :class="scrollbars ? 'overflow-auto' : 'overflow-hidden'">
+        <tree
+          :data="tree"
+          :collapsable="collapsed"
+          :horizontal="true"
+          :render-content="renderContent"
+          @expand="onExpand"
+          @node-click="selectNode"
+          @node-double-click="createChild"
+          class="select-none cursor-move"
+        />
+      </div>
     </div>
 
-    <div class="h-screen min-w-64 w-full max-w-sm flex flex-col justify-between shadow-md">
+    <div class="h-screen min-w-64 w-full max-w-sm flex flex-col justify-between shadow">
       <node
         :selected="selected"
         @escape="escapeNode"
@@ -62,6 +77,7 @@ const nodeTemplate = {
 export default {
   data: () => {
     return {
+      scrollbars: false,
       collapsed: true,
       selected: { ...nodeTemplate },
       tree: { ...nodeTemplate },
@@ -151,11 +167,14 @@ export default {
     
     updateNode (obj = {}, path, value) {
       if (path.length === 1) {
-        obj.children[path] = {
-          ...obj.children[path],
-          ...value
+        if (obj.children[path]) {
+          obj.children[path] = {
+            ...obj.children[path],
+            ...value
+          }
+          return true
         }
-        return
+        return false
       }
       return this.updateNode(obj.children[path[0]], path.slice(1), value)
     },
@@ -168,7 +187,6 @@ export default {
       axios.post('/api/tree', node)
       .then(() => {
         this.updateNode(this.tree, node.id.split('/').slice(1), node)
-        // this.escapeNode()
       })
       .catch(error => console.error(error))
     },
