@@ -41,12 +41,12 @@
 
     <div class="flex justify-end items-center py-4 px-3">
       <button
-        @click.prevent="escape"
+        @click.prevent="deleteNode"
         type="submit"
         role="submit"
         class="ml-3 my-2 mr-4 py-px text-red border-b border-transparent hover:border-red"
       >
-        Escape
+        Delete
       </button>
 
       <button
@@ -114,9 +114,9 @@ export default {
   },
 
   methods: {
-    escape () {
+    deleteNode () {
+      this.$emit('delete', this.node)
       this.node = nodeTemplate
-      this.$emit('escape')
     },
 
     pushNode () {

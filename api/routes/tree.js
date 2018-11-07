@@ -45,6 +45,16 @@ const pushNode = (name, value) => {
   }
 }
 
+const deleteNode = nodeName => {
+  try {
+    db().delete(nodeName)
+    return true
+  } catch (e) {
+    console.error(e)
+    return false
+  }
+}
+
 /* GET tree listing. */
 router.get('/tree', (req, res) => {
   const tree = fetchNode('/')
@@ -61,13 +71,14 @@ router.post('/tree', (req, res) => {
   }
 })
 
-/* GET node by ID. */
-router.get('/tree/:node', (req, res) => {
-  const node = fetchNode(`/${req.params.node}`)
-  if (Object.keys(node).length > 0) {
-    res.json(node)
+/* DELETE node by ID. */
+router.delete('/tree/[a-z0-9\-\/]+', (req, res) => {
+  const node = req.originalUrl.replace('/api/tree', '')
+  
+  if (deleteNode(node)) {
+    res.sendStatus(204)
   } else {
-    res.sendStatus(404)
+    res.sendStatus(403)
   }
 })
 

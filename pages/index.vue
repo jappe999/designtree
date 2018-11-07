@@ -42,6 +42,7 @@
         :selected="selected"
         @escape="escapeNode"
         @push="pushNode"
+        @delete="deleteNode"
       />
 
       <div class="py-6 px-3">
@@ -187,6 +188,14 @@ export default {
       axios.post('/api/tree', node)
       .then(() => {
         this.updateNode(this.tree, node.id.split('/').slice(1), node)
+      })
+      .catch(error => console.error(error))
+    },
+
+    deleteNode (node) {
+      axios.delete(`/api/tree/${node.id}`)
+      .then(() => {
+        // this.updateNode(this.tree, node.id.split('/').slice(1), node)
       })
       .catch(error => console.error(error))
     },
