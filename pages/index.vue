@@ -1,17 +1,24 @@
 <template>
   <div class="flex text-black">
     <div class="max-h-screen w-full overflow-auto dragscroll">
-      <h1 class="p-8">Design Tree</h1>
+      <h1 class="pt-8 px-8 pb-4">Design Tree</h1>
+
+      <div class="px-8 pb-8">
+        <label>
+          <input type="checkbox" v-model="collapsed">
+          Collapsed
+        </label>
+      </div>
 
       <tree
         :data="tree"
-        :collapsable="true"
+        :collapsable="collapsed"
         :horizontal="true"
         :render-content="renderContent"
         @expand="onExpand"
         @node-click="selectNode"
         @node-double-click="createChild"
-        class="select-none"
+        class="select-none cursor-move"
       />
     </div>
 
@@ -55,6 +62,7 @@ const nodeTemplate = {
 export default {
   data: () => {
     return {
+      collapsed: true,
       selected: { ...nodeTemplate },
       tree: { ...nodeTemplate },
     }
@@ -75,8 +83,6 @@ export default {
         ...this.tree,
         ...data,
       }
-      console.log(this.tree);
-      
     },
 
     renderContent (h, data) {
