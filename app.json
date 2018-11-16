@@ -1,6 +1,7 @@
 {
   "name": "designtree",
   "scripts": {
+    "build": "nuxt build"
   },
   "env": {
   },
