@@ -60,6 +60,7 @@
 <script>
 import axios from 'axios'
 import uuid from 'uuid/v4'
+import { unset, get, set, update, has } from 'lodash'
 import Node from '~/components/Node'
 
 if (process.browser) {
@@ -117,7 +118,7 @@ export default {
       }
     },
     
-    collapse (object) {      
+    collapse (object) {
       Object.keys(object).forEach(key => {
         const child = object[key]
         if (child.expand) {
@@ -165,19 +166,11 @@ export default {
     escapeNode () {
       this.selected = nodeTemplate
     },
-    
-    updateNode (obj = {}, path, value) {
-      if (path.length === 1) {
-        if (obj.children[path]) {
-          obj.children[path] = {
-            ...obj.children[path],
-            ...value
-          }
-          return true
-        }
-        return false
-      }
-      return this.updateNode(obj.children[path[0]], path.slice(1), value)
+
+    getParent ({ id }) {
+      const idArray = id.split('/').slice(1)
+      const path = 'children.' + idArray.splice(0, idArray.length - 1).join('.children.')
+      return get(this.tree, path)
     },
 
     pushNode (node) {
@@ -187,7 +180,15 @@ export default {
 
       axios.post('/api/tree', node)
       .then(() => {
-        this.updateNode(this.tree, node.id.split('/').slice(1), node)
+        const path = 'children.' + node.id.split('/').slice(1).join('.children.')
+        
+        if (has(this.tree, path)) {
+          this.tree = update(this.tree, path, oldNode => ({ ...oldNode, ...node }))
+        } else {
+          this.tree = set(this.tree, path, node)
+        }
+        
+        this.getParent(node).expand = true
       })
       .catch(error => console.error(error))
     },
@@ -195,7 +196,9 @@ export default {
     deleteNode (node) {
       axios.delete(`/api/tree/${node.id}`)
       .then(() => {
-        // this.updateNode(this.tree, node.id.split('/').slice(1), node)
+        const path = 'children.' + node.id.split('/').slice(1).join('.children.')
+        unset(this.tree, path)
+        this.getParent(node).expand = false
       })
       .catch(error => console.error(error))
     },
