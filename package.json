@@ -7,12 +7,14 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "run": "nuxt start",
-    "start": "nuxt build && nuxt start",
+    "run": "nuxt build && nuxt start",
+    "start": "nuxt build && nodemon node_modules/.bin/nuxt start",
     "generate": "nuxt generate",
-    "heroku-postbuild": "node ./fetch.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint"
+  },
+  "nodemonConfig": {
+    "ignore": [".nuxt"]
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -22,6 +24,7 @@
     "glob-all": "^3.1.0",
     "lodash": "^4.17.11",
     "node-json-db": "^0.9.1",
+    "nodemon": "^1.18.7",
     "nuxt": "^2.0.0",
     "purgecss-webpack-plugin": "^1.3.0",
     "tailwindcss": "^0.6.5",
